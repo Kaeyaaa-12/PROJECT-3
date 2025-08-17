@@ -86,6 +86,24 @@
                         </ul>
                     </li>
 
+                    {{-- Menu Baru: Data Ekonomi & Keuangan --}}
+                    <li>
+                        <button onclick="toggleSubmenu('ekonomi-keuangan')"
+                            class="flex items-center justify-between w-full px-4 py-2 hover:bg-gray-700 rounded-md text-left">
+                            <span class="flex items-center truncate">
+                                <i class="ri-money-dollar-circle-line mr-3 w-5 text-center flex-shrink-0"></i>
+                                <span class="truncate">Data Ekonomi & Keuangan</span>
+                            </span>
+                            <i class="ri-arrow-down-s-line ml-2 flex-shrink-0"></i>
+                        </button>
+                        <ul id="ekonomi-keuangan" class="submenu pl-8 mt-1 space-y-1">
+                            <li><a href="#" class="block px-4 py-1 hover:text-gray-300 rounded-md">PDRB per Sektor
+                                    Usaha</a></li>
+                            <li><a href="#" class="block px-4 py-1 hover:text-gray-300 rounded-md">Laju Inflasi
+                                    Tahunan</a></li>
+                        </ul>
+                    </li>
+
                     <li>
                         <button onclick="toggleSubmenu('infrastruktur')"
                             class="flex items-center justify-between w-full px-4 py-2 hover:bg-gray-700 rounded-md text-left">
