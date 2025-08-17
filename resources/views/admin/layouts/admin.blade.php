@@ -120,9 +120,10 @@
                             <li><a href="{{ route('admin.data_akses_rumah_tangga.index') }}"
                                     class="block px-4 py-1 hover:text-gray-300 rounded-md">Data Akses Rumah Tangga</a>
                             </li>
-                            <li><a href="{{ route('admin.data_luas_lahan_produksi_pertanian') }}"
+                            <li><a href="{{ route('admin.data_luas_lahan_produksi_pertanian.index') }}"
                                     class="block px-4 py-1 hover:text-gray-300 rounded-md">Data Luas Lahan &
-                                    Produksi</a></li>
+                                    Produksi</a>
+                            </li>
                         </ul>
                     </li>
                 </ul>

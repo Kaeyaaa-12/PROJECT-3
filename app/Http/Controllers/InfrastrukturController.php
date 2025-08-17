@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\KondisiJalan;
 use App\Models\AksesRumahTangga;
+use App\Models\LuasLahanProduksiPertanian;
 use Illuminate\Http\Request;
 
 class InfrastrukturController extends Controller
@@ -48,13 +49,9 @@ class InfrastrukturController extends Controller
             ];
         }
 
-        // Data Luas Lahan dan Produksi Pertanian (sudah ada)
-        $dataPertanian = [
-            ['komoditas' => 'Padi Sawah', 'luas_lahan_ha' => 35200, 'produksi_ton' => 210500],
-            ['komoditas' => 'Jagung', 'luas_lahan_ha' => 18500, 'produksi_ton' => 95000],
-            ['komoditas' => 'Tebu', 'luas_lahan_ha' => 8900, 'produksi_ton' => 650000],
-            ['komoditas' => 'Kedelai', 'luas_lahan_ha' => 4500, 'produksi_ton' => 7000],
-        ];
+        // Ambil data pertanian dari database
+        $tahunTerbaru = LuasLahanProduksiPertanian::max('tahun');
+        $dataPertanian = LuasLahanProduksiPertanian::where('tahun', $tahunTerbaru)->get();
 
         return view('infrastruktur.index', compact('dataKondisiJalan', 'dataAksesRumahTangga', 'dataPertanian'));
     }

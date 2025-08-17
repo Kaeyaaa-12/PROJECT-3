@@ -80,7 +80,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('/data-akses-rumah-tangga', DataAksesRumahTanggaController::class)
             ->parameter('data-akses-rumah-tangga', 'data_akses_rumah_tangga')
             ->names('data_akses_rumah_tangga');
-        Route::get('/data-luas-lahan-produksi-pertanian', [DataLuasLahanProduksiPertanianController::class, 'index'])->name('data_luas_lahan_produksi_pertanian');
+        Route::resource('/data-luas-lahan-produksi-pertanian', DataLuasLahanProduksiPertanianController::class)
+            ->parameter('data-luas-lahan-produksi-pertanian', 'pertanian') // <-- UBAH DI SINI
+            ->names('data_luas_lahan_produksi_pertanian');
     });
 });
 
