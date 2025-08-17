@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\DataKondisiJalanController;
 use App\Http\Controllers\Admin\DataAksesRumahTanggaController;
 use App\Http\Controllers\Admin\DataLuasLahanProduksiPertanianController;
 use App\Http\Controllers\Admin\DataApsController;
+use App\Http\Controllers\Admin\DataPdrbSektorUsahaController;
 
 
 
@@ -65,6 +66,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
          Route::resource('/data-kesehatan', DataKesehatanController::class)
             ->parameter('data-kesehatan', 'data_kesehatan') // parameter disesuaikan
             ->names('data_kesehatan');
+
+        // Rute Data Ekonomi & Keuangan
+        Route::resource('/data-pdrb-sektor-usaha', DataPdrbSektorUsahaController::class)->names('data_pdrb_sektor_usaha');
 
         // Rute Data Infrastruktur
         Route::get('/data-kondisi-jalan', [DataKondisiJalanController::class, 'index'])->name('data_kondisi_jalan');

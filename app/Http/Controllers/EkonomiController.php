@@ -1,17 +1,34 @@
 <?php
 namespace App\Http\Controllers;
-use App\Models\EkonomiKecamatan; // Pastikan ini ada
+use App\Models\EkonomiKecamatan;
+use App\Models\PdrbSektorUsaha;
 use Illuminate\Http\Request;
 
 class EkonomiController extends Controller {
 
     // Method BARU untuk Halaman Utama Kategori Ekonomi
     public function index() {
-        // Data untuk Grafik PDRB per Sektor
-        $dataPdrbSektor = [
-            'labels' => ['Pertanian', 'Industri', 'Perdagangan', 'Konstruksi', 'Jasa'],
-            'values' => [28.5, 22.1, 18.7, 10.5, 20.2]
-        ];
+        // Mengambil data PDRB Sektor Usaha terbaru
+        $pdrbTerbaru = PdrbSektorUsaha::orderBy('tahun', 'desc')->first();
+
+        if ($pdrbTerbaru) {
+            $dataPdrbSektor = [
+                'labels' => ['Pertanian', 'Industri', 'Perdagangan', 'Konstruksi', 'Jasa'],
+                'values' => [
+                    $pdrbTerbaru->pertanian,
+                    $pdrbTerbaru->industri,
+                    $pdrbTerbaru->perdagangan,
+                    $pdrbTerbaru->konstruksi,
+                    $pdrbTerbaru->jasa,
+                ]
+            ];
+        } else {
+            // Data default jika tabel masih kosong
+            $dataPdrbSektor = [
+                'labels' => ['Pertanian', 'Industri', 'Perdagangan', 'Konstruksi', 'Jasa'],
+                'values' => [0, 0, 0, 0, 0]
+            ];
+        }
 
         // Data untuk Grafik Inflasi Tahunan
         $dataInflasi = [
