@@ -5,8 +5,11 @@ use App\Models\PendudukKecamatan;
 
 class PendudukController extends Controller {
     public function index() {
-        // Ambil data dari database dimana tahunnya adalah 2025
-        $dataPenduduk = PendudukKecamatan::where('tahun', 2025)
+        // Cari tahun terbaru yang ada di database
+        $tahunTerbaru = PendudukKecamatan::max('tahun');
+
+        // Ambil data penduduk hanya dari tahun terbaru tersebut
+        $dataPenduduk = PendudukKecamatan::where('tahun', $tahunTerbaru)
                             ->orderBy('jumlah_penduduk', 'desc')
                             ->get();
 

@@ -48,7 +48,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/logout', [AdminController::class, 'logout'])->name('logout');
 
         // Rute Manajemen Data Statistik
-        Route::get('/data-penduduk', [DataPendudukController::class, 'index'])->name('data_penduduk');
+        Route::resource('/data-penduduk', DataPendudukController::class)->names('data_penduduk');
         Route::get('/data-ekonomi', [DataEkonomiController::class, 'index'])->name('data_ekonomi');
         Route::get('/data-ipm', [DataIPMController::class, 'index'])->name('data_ipm');
         Route::get('/data-kemiskinan', [DataKemiskinanController::class, 'index'])->name('data_kemiskinan');

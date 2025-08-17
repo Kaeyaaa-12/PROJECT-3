@@ -2,50 +2,50 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PendudukKecamatan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        // =======================================================
-        // BAGIAN BARU YANG DITAMBAHKAN
-        // Data untuk 5 Indikator Kunci (KPI) [cite: 5, 6, 7, 8, 9]
+        // 1. MENGAMBIL DATA UNTUK KARTU INDIKATOR (KPI)
+        // Logika ini mencari tahun paling baru di database, lalu menjumlahkan penduduk di tahun itu.
+        $tahunTerbaru = PendudukKecamatan::max('tahun');
+        $totalPenduduk = $tahunTerbaru ? PendudukKecamatan::where('tahun', $tahunTerbaru)->sum('jumlah_penduduk') : 0;
+
         $kpiData = [
-            'Jumlah Penduduk' => '1.145,2 Ribu Jiwa',
+            'Jumlah Penduduk' => number_format($totalPenduduk / 1000, 1, ',', '.') . ' Ribu Jiwa',
             'Pertumbuhan Ekonomi' => '5.57 %',
             'Indeks Pembangunan Manusia' => '74.70',
             'Tingkat Kemiskinan' => '6.65 %',
             'Tingkat Pengangguran' => '4.15 %',
         ];
-        // =======================================================
 
-        // KODE LAMA YANG SUDAH ADA (JANGAN DIHAPUS)
-        // Data untuk Grafik Jumlah Penduduk (dalam ribu jiwa)
+        // 2. MENGAMBIL DATA UNTUK GRAFIK DARI SEMUA TAHUN
+        // Query ini SENGaja TIDAK memiliki filter "where('tahun', ...)"
+        // agar mengambil data dari SEMUA TAHUN yang ada.
+        $pendudukPerTahun = PendudukKecamatan::select(
+                DB::raw('tahun as label'),
+                DB::raw('SUM(jumlah_penduduk) / 1000 as value')
+            )
+            ->groupBy('tahun')
+            ->orderBy('tahun', 'asc')
+            ->get();
+
+        // Mengolah data untuk format yang dibutuhkan oleh Chart.js
         $dataPenduduk = [
-            'labels' => ['2021', '2022', '2023'],
-            'values' => [1128.0, 1134.7, 1145.2]
+            'labels' => $pendudukPerTahun->pluck('label'),
+            'values' => $pendudukPerTahun->pluck('value')
         ];
 
-        // Data untuk Grafik Indeks Pembangunan Manusia (IPM)
-        $dataIPM = [
-            'labels' => ['2021', '2022', '2023'],
-            'values' => [73.6, 74.1, 74.7]
-        ];
-        
-        // Data untuk Grafik Laju Inflasi Tahunan (%)
-        $dataInflasi = [
-            'labels' => ['2021', '2022', '2023'],
-            'values' => [3.0, 6.2, 2.8]
-        ];
-        
-        // Data untuk Grafik Persentase Penduduk Miskin (%)
-        $dataMiskin = [
-            'labels' => ['2021', '2022', '2023'],
-            'values' => [7.0, 6.7, 6.6]
-        ];
+        // Data dummy untuk grafik lainnya (biarkan seperti semula)
+        $dataIPM = [ 'labels' => ['2021', '2022', '2023'], 'values' => [73.6, 74.1, 74.7] ];
+        $dataInflasi = [ 'labels' => ['2021', '2022', '2023'], 'values' => [3.0, 6.2, 2.8] ];
+        $dataMiskin = [ 'labels' => ['2021', '2022', '2023'], 'values' => [7.0, 6.7, 6.6] ];
 
-        // Tambahkan $kpiData ke dalam return view
+        // Mengirim semua data ke view
         return view('dashboard', compact('kpiData', 'dataPenduduk', 'dataIPM', 'dataInflasi', 'dataMiskin'));
     }
 }
