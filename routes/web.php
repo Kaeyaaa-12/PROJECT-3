@@ -18,11 +18,11 @@ use App\Http\Controllers\Admin\DataIPMController;
 use App\Http\Controllers\Admin\DataKemiskinanController;
 use App\Http\Controllers\Admin\DataPengangguranController;
 use App\Http\Controllers\Admin\DataPendidikanController;
-use App\Http\Controllers\Admin\DataAPSController;
 use App\Http\Controllers\Admin\DataKesehatanController;
 use App\Http\Controllers\Admin\DataKondisiJalanController;
 use App\Http\Controllers\Admin\DataAksesRumahTanggaController;
 use App\Http\Controllers\Admin\DataLuasLahanProduksiPertanianController;
+use App\Http\Controllers\Admin\DataApsController;
 
 
 
@@ -57,9 +57,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         // Rute Data Sosial & Kesejahteraan
         Route::resource('/data-pendidikan', DataPendidikanController::class)
-    ->parameter('data-pendidikan', 'pendidikan') // Tambahkan baris ini
-    ->names('data_pendidikan');
-        Route::get('/data-aps', [DataAPSController::class, 'index'])->name('data_aps');
+            ->parameter('data-pendidikan', 'pendidikan') // Tambahkan baris ini
+            ->names('data_pendidikan');
+        Route::resource('/data-aps', DataApsController::class)
+            ->parameter('data-aps', 'data_ap') // parameter disesuaikan dengan variabel di controller
+            ->names('data_aps');
         Route::get('/data-kesehatan', [DataKesehatanController::class, 'index'])->name('data_kesehatan');
 
         // Rute Data Infrastruktur

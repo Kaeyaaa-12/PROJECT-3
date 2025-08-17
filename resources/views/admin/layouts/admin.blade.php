@@ -79,7 +79,7 @@
                         <ul id="sosial-kesejahteraan" class="submenu pl-8 mt-1 space-y-1">
                             <li><a href="{{ route('admin.data_pendidikan.index') }}"
                                     class="block px-4 py-1 hover:text-gray-300 rounded-md">Data Pendidikan</a></li>
-                            <li><a href="{{ route('admin.data_aps') }}"
+                            <li><a href="{{ route('admin.data_aps.index') }}"
                                     class="block px-4 py-1 hover:text-gray-300 rounded-md">Data APS</a></li>
                             <li><a href="{{ route('admin.data_kesehatan') }}"
                                     class="block px-4 py-1 hover:text-gray-300 rounded-md">Data Kesehatan</a></li>
