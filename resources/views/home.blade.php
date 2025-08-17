@@ -176,7 +176,7 @@
                 maintainAspectRatio: false,
                 scales: {
                     y: {
-                        beginAtZero: false
+                        beginAtZero: true
                     }
                 }
             }

@@ -56,8 +56,10 @@
                                     class="block px-4 py-1 hover:text-gray-300 rounded-md">Data Penduduk</a></li>
                             <li><a href="{{ route('admin.data_ekonomi.index') }}"
                                     class="block px-4 py-1 hover:text-gray-300 rounded-md">Data Ekonomi</a></li>
-                            <li><a href="{{ route('admin.data_ipm') }}"
-                                    class="block px-4 py-1 hover:text-gray-300 rounded-md">Data IPM</a></li>
+                            <li>
+                                <a href="{{ route('admin.data_ipm.index') }}"
+                                    class="block px-4 py-1 hover:text-gray-300 rounded-md">Data IPM</a>
+                            </li>
                             <li><a href="{{ route('admin.data_kemiskinan') }}"
                                     class="block px-4 py-1 hover:text-gray-300 rounded-md">Data Kemiskinan</a></li>
                             <li><a href="{{ route('admin.data_pengangguran') }}"
