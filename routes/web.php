@@ -36,7 +36,8 @@ Route::get('/ekonomi-keuangan', [EkonomiController::class, 'index'])->name('ekon
 Route::get('/infrastruktur-lingkungan', [InfrastrukturController::class, 'index'])->name('infrastruktur.index');
 
 Route::get('/penduduk-per-kecamatan', [PendudukController::class, 'index'])->name('penduduk.detail');
-Route::get('/ekonomi-per-kecamatan', [EkonomiController::class, 'index'])->name('ekonomi.detail');
+
+Route::get('/ekonomi-per-kecamatan', [EkonomiController::class, 'perKecamatan'])->name('ekonomi.detail');
 
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/login', [AdminController::class, 'showLoginForm'])->name('login');
