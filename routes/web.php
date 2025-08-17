@@ -50,7 +50,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         // Rute Manajemen Data Statistik
         Route::resource('/data-penduduk', DataPendudukController::class)->names('data_penduduk');
-        Route::get('/data-ekonomi', [DataEkonomiController::class, 'index'])->name('data_ekonomi');
+        Route::resource('/data-ekonomi', DataEkonomiController::class)->names('data_ekonomi');
         Route::get('/data-ipm', [DataIPMController::class, 'index'])->name('data_ipm');
         Route::get('/data-kemiskinan', [DataKemiskinanController::class, 'index'])->name('data_kemiskinan');
         Route::get('/data-pengangguran', [DataPengangguranController::class, 'index'])->name('data_pengangguran');

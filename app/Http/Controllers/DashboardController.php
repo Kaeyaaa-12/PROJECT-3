@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EkonomiKecamatan; // 1. Tambahkan ini
 use App\Models\PendudukKecamatan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -10,19 +11,25 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        // 1. MENGAMBIL DATA UNTUK KARTU INDIKATOR (KPI)
-        $tahunTerbaru = PendudukKecamatan::max('tahun');
-        $totalPenduduk = $tahunTerbaru ? PendudukKecamatan::where('tahun', $tahunTerbaru)->sum('jumlah_penduduk') : 0;
+        // --- MENGAMBIL DATA UNTUK KARTU INDIKATOR (KPI) ---
+
+        // 1. Data Jumlah Penduduk (sudah dinamis)
+        $tahunPendudukTerbaru = PendudukKecamatan::max('tahun');
+        $totalPenduduk = $tahunPendudukTerbaru ? PendudukKecamatan::where('tahun', $tahunPendudukTerbaru)->sum('jumlah_penduduk') : 0;
+
+        // 2. Data Pertumbuhan Ekonomi (YANG DIPERBAIKI)
+        $tahunEkonomiTerbaru = EkonomiKecamatan::max('tahun');
+        $rataRataPertumbuhan = $tahunEkonomiTerbaru ? EkonomiKecamatan::where('tahun', $tahunEkonomiTerbaru)->avg('laju_pertumbuhan') : 0;
 
         $kpiData = [
             'Jumlah Penduduk' => number_format($totalPenduduk / 1000, 1, ',', '.') . ' Ribu Jiwa',
-            'Pertumbuhan Ekonomi' => '5.57 %',
-            'Indeks Pembangunan Manusia' => '74.70',
-            'Tingkat Kemiskinan' => '6.65 %',
-            'Tingkat Pengangguran' => '4.15 %',
+            'Pertumbuhan Ekonomi' => number_format($rataRataPertumbuhan, 2, ',', '.') . ' %', // 3. Ganti dengan variabel
+            'Indeks Pembangunan Manusia' => '74.70', // (Masih statis)
+            'Tingkat Kemiskinan' => '6.65 %', // (Masih statis)
+            'Tingkat Pengangguran' => '4.15 %', // (Masih statis)
         ];
 
-        // 2. MENGAMBIL DATA UNTUK GRAFIK DARI SEMUA TAHUN
+        // --- MENGAMBIL DATA UNTUK GRAFIK ---
         $pendudukPerTahun = PendudukKecamatan::select(
                 DB::raw('tahun as label'),
                 DB::raw('SUM(jumlah_penduduk) / 1000 as value')
@@ -36,7 +43,7 @@ class DashboardController extends Controller
             'values' => $pendudukPerTahun->pluck('value')
         ];
 
-        // Data dummy lainnya
+        // Data dummy lainnya (biarkan seperti ini dulu)
         $dataIPM = [ 'labels' => ['2021', '2022', '2023'], 'values' => [73.6, 74.1, 74.7] ];
         $dataInflasi = [ 'labels' => ['2021', '2022', '2023'], 'values' => [3.0, 6.2, 2.8] ];
         $dataMiskin = [ 'labels' => ['2021', '2022', '2023'], 'values' => [7.0, 6.7, 6.6] ];

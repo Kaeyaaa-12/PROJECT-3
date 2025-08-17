@@ -22,9 +22,13 @@ class EkonomiController extends Controller {
         return view('ekonomi.index', compact('dataPdrbSektor', 'dataInflasi'));
     }
 
-    // Method LAMA untuk detail per kecamatan (biarkan saja)
+     // Ubah method perKecamatan menjadi seperti ini
     public function perKecamatan() {
-        $dataEkonomi = EkonomiKecamatan::where('tahun', 2025)
+        // Ambil tahun terbaru dari data ekonomi
+        $tahunTerbaru = EkonomiKecamatan::max('tahun');
+
+        // Ambil data ekonomi dari tahun terbaru
+        $dataEkonomi = EkonomiKecamatan::where('tahun', $tahunTerbaru)
                             ->orderBy('laju_pertumbuhan', 'desc')
                             ->get();
 
