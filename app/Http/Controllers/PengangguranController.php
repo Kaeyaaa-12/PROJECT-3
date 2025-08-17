@@ -5,7 +5,11 @@ use App\Models\PengangguranKecamatan;
 
 class PengangguranController extends Controller {
     public function index() {
-        $dataPengangguran = PengangguranKecamatan::where('tahun', 2025)
+        // Ambil tahun terbaru
+        $tahunTerbaru = PengangguranKecamatan::max('tahun');
+
+        // Ambil data dari tahun terbaru dan urutkan
+        $dataPengangguran = PengangguranKecamatan::where('tahun', $tahunTerbaru)
                             ->orderBy('persentase_pengangguran', 'desc')
                             ->get();
 

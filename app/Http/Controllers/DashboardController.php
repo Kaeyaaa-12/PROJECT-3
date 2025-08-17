@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\EkonomiKecamatan;
-use App\Models\IpmKecamatan; // Tambahkan ini
+use App\Models\IpmKecamatan;
 use App\Models\PendudukKecamatan;
 use App\Models\KemiskinanKecamatan;
+use App\Models\PengangguranKecamatan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -31,13 +32,16 @@ class DashboardController extends Controller
         $tahunKemiskinanTerbaru = KemiskinanKecamatan::max('tahun');
         $rataRataKemiskinan = $tahunKemiskinanTerbaru ? KemiskinanKecamatan::where('tahun', $tahunKemiskinanTerbaru)->avg('persentase_kemiskinan') : 0;
 
+        // 5. Data Tingkat Pengangguran (BARU dan DINAMIS)
+        $tahunPengangguranTerbaru = PengangguranKecamatan::max('tahun');
+        $rataRataPengangguran = $tahunPengangguranTerbaru ? PengangguranKecamatan::where('tahun', $tahunPengangguranTerbaru)->avg('persentase_pengangguran') : 0;
 
         $kpiData = [
-            'Jumlah Penduduk' => number_format($totalPenduduk / 1000, 1, ',', '.') . ' Ribu Jiwa',
-            'Pertumbuhan Ekonomi' => number_format($rataRataPertumbuhan, 2, ',', '.') . ' %',
-            'Indeks Pembangunan Manusia' => number_format($rataRataIpm, 2, ',', '.'),
-            'Tingkat Kemiskinan' => number_format($rataRataKemiskinan, 2, ',', '.') . ' %', // Data dinamis
-            'Tingkat Pengangguran' => '4.15 %', // (Masih statis)
+        'Jumlah Penduduk' => number_format($totalPenduduk / 1000, 1, ',', '.') . ' Ribu Jiwa',
+        'Pertumbuhan Ekonomi' => number_format($rataRataPertumbuhan, 2, ',', '.') . ' %',
+        'Indeks Pembangunan Manusia' => number_format($rataRataIpm, 2, ',', '.'),
+        'Tingkat Kemiskinan' => number_format($rataRataKemiskinan, 2, ',', '.') . ' %',
+        'Tingkat Pengangguran' => number_format($rataRataPengangguran, 2, ',', '.') . ' %', // Data dinamis
         ];
 
         // --- MENGAMBIL DATA UNTUK GRAFIK ---

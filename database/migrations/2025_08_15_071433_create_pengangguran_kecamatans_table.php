@@ -8,7 +8,7 @@ return new class extends Migration {
         Schema::create('pengangguran_kecamatans', function (Blueprint $table) {
             $table->id();
             $table->string('kecamatan');
-            $table->decimal('persentase_pengangguran', 4, 2); // Persentase, misal 4.15
+            $table->decimal('persentase_pengangguran', 5, 2); // Persentase, misal 4.15
             $table->year('tahun');
             $table->timestamps();
         });

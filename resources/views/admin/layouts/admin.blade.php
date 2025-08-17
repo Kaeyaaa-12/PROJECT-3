@@ -62,7 +62,7 @@
                             </li>
                             <li><a href="{{ route('admin.data_kemiskinan.index') }}"
                                     class="block px-4 py-1 hover:text-gray-300 rounded-md">Data Kemiskinan</a></li>
-                            <li><a href="{{ route('admin.data_pengangguran') }}"
+                            <li><a href="{{ route('admin.data_pengangguran.index') }}"
                                     class="block px-4 py-1 hover:text-gray-300 rounded-md">Data Pengangguran</a></li>
                         </ul>
                     </li>
