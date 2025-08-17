@@ -74,7 +74,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
             ->names('data_laju_inflasi');
 
         // Rute Data Infrastruktur
-        Route::get('/data-kondisi-jalan', [DataKondisiJalanController::class, 'index'])->name('data_kondisi_jalan');
+         Route::resource('/data-kondisi-jalan', DataKondisiJalanController::class)
+            ->parameter('data-kondisi-jalan', 'data_kondisi_jalan')
+            ->names('data_kondisi_jalan');
         Route::get('/data-akses-rumah-tangga', [DataAksesRumahTanggaController::class, 'index'])->name('data_akses_rumah_tangga');
         Route::get('/data-luas-lahan-produksi-pertanian', [DataLuasLahanProduksiPertanianController::class, 'index'])->name('data_luas_lahan_produksi_pertanian');
     });

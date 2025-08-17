@@ -115,7 +115,7 @@
                             <i class="ri-arrow-down-s-line ml-2 flex-shrink-0"></i>
                         </button>
                         <ul id="infrastruktur" class="submenu pl-8 mt-1 space-y-1">
-                            <li><a href="{{ route('admin.data_kondisi_jalan') }}"
+                            <li><a href="{{ route('admin.data_kondisi_jalan.index') }}"
                                     class="block px-4 py-1 hover:text-gray-300 rounded-md">Data Kondisi Jalan</a></li>
                             <li><a href="{{ route('admin.data_akses_rumah_tangga') }}"
                                     class="block px-4 py-1 hover:text-gray-300 rounded-md">Data Akses Rumah Tangga</a>
