@@ -56,7 +56,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('/data-pengangguran', DataPengangguranController::class)->names('data_pengangguran');
 
         // Rute Data Sosial & Kesejahteraan
-        Route::get('/data-pendidikan', [DataPendidikanController::class, 'index'])->name('data_pendidikan');
+        Route::resource('/data-pendidikan', DataPendidikanController::class)
+    ->parameter('data-pendidikan', 'pendidikan') // Tambahkan baris ini
+    ->names('data_pendidikan');
         Route::get('/data-aps', [DataAPSController::class, 'index'])->name('data_aps');
         Route::get('/data-kesehatan', [DataKesehatanController::class, 'index'])->name('data_kesehatan');
 
