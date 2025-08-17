@@ -27,7 +27,7 @@ use App\Http\Controllers\Admin\DataLuasLahanProduksiPertanianController;
 
 
 // Rute Halaman Utama
-Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/', [DashboardController::class, 'index'])->name('home');
 Route::get('/ipm-per-kecamatan', [IpmController::class, 'index'])->name('ipm.detail');
 Route::get('/kemiskinan-per-kecamatan', [KemiskinanController::class, 'index'])->name('kemiskinan.detail');
 Route::get('/pengangguran-per-kecamatan', [PengangguranController::class, 'index'])->name('pengangguran.detail');
