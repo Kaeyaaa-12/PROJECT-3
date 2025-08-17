@@ -60,7 +60,7 @@
                                 <a href="{{ route('admin.data_ipm.index') }}"
                                     class="block px-4 py-1 hover:text-gray-300 rounded-md">Data IPM</a>
                             </li>
-                            <li><a href="{{ route('admin.data_kemiskinan') }}"
+                            <li><a href="{{ route('admin.data_kemiskinan.index') }}"
                                     class="block px-4 py-1 hover:text-gray-300 rounded-md">Data Kemiskinan</a></li>
                             <li><a href="{{ route('admin.data_pengangguran') }}"
                                     class="block px-4 py-1 hover:text-gray-300 rounded-md">Data Pengangguran</a></li>

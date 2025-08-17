@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\EkonomiKecamatan;
 use App\Models\IpmKecamatan; // Tambahkan ini
 use App\Models\PendudukKecamatan;
+use App\Models\KemiskinanKecamatan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -26,12 +27,16 @@ class DashboardController extends Controller
         $tahunIpmTerbaru = IpmKecamatan::max('tahun');
         $rataRataIpm = $tahunIpmTerbaru ? IpmKecamatan::where('tahun', $tahunIpmTerbaru)->avg('skor_ipm') : 0;
 
+        // 4. Data Tingkat Kemiskinan (BARU)
+        $tahunKemiskinanTerbaru = KemiskinanKecamatan::max('tahun');
+        $rataRataKemiskinan = $tahunKemiskinanTerbaru ? KemiskinanKecamatan::where('tahun', $tahunKemiskinanTerbaru)->avg('persentase_kemiskinan') : 0;
+
 
         $kpiData = [
             'Jumlah Penduduk' => number_format($totalPenduduk / 1000, 1, ',', '.') . ' Ribu Jiwa',
             'Pertumbuhan Ekonomi' => number_format($rataRataPertumbuhan, 2, ',', '.') . ' %',
-            'Indeks Pembangunan Manusia' => number_format($rataRataIpm, 2, ',', '.'), // Ganti dengan data dinamis
-            'Tingkat Kemiskinan' => '6.65 %', // (Masih statis)
+            'Indeks Pembangunan Manusia' => number_format($rataRataIpm, 2, ',', '.'),
+            'Tingkat Kemiskinan' => number_format($rataRataKemiskinan, 2, ',', '.') . ' %', // Data dinamis
             'Tingkat Pengangguran' => '4.15 %', // (Masih statis)
         ];
 
@@ -63,9 +68,22 @@ class DashboardController extends Controller
             'values' => $ipmPerTahun->pluck('value')
         ];
 
+        // Data Kemiskinan (BARU)
+        $kemiskinanPerTahun = KemiskinanKecamatan::select(
+                DB::raw('tahun as label'),
+                DB::raw('AVG(persentase_kemiskinan) as value')
+            )
+            ->groupBy('tahun')
+            ->orderBy('tahun', 'asc')
+            ->get();
+
+        $dataMiskin = [
+            'labels' => $kemiskinanPerTahun->pluck('label'),
+            'values' => $kemiskinanPerTahun->pluck('value')
+        ];
+
         // Data dummy lainnya
         $dataInflasi = [ 'labels' => ['2021', '2022', '2023'], 'values' => [3.0, 6.2, 2.8] ];
-        $dataMiskin = [ 'labels' => ['2021', '2022', '2023'], 'values' => [7.0, 6.7, 6.6] ];
 
         return view('home', compact('kpiData', 'dataPenduduk', 'dataIPM', 'dataInflasi', 'dataMiskin'));
     }

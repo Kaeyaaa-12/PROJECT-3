@@ -52,7 +52,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('/data-penduduk', DataPendudukController::class)->names('data_penduduk');
         Route::resource('/data-ekonomi', DataEkonomiController::class)->names('data_ekonomi');
         Route::resource('/data-ipm', DataIPMController::class)->names('data_ipm');
-        Route::get('/data-kemiskinan', [DataKemiskinanController::class, 'index'])->name('data_kemiskinan');
+        Route::resource('/data-kemiskinan', DataKemiskinanController::class)->names('data_kemiskinan');
         Route::get('/data-pengangguran', [DataPengangguranController::class, 'index'])->name('data_pengangguran');
 
         // Rute Data Sosial & Kesejahteraan
