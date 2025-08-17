@@ -62,7 +62,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('/data-aps', DataApsController::class)
             ->parameter('data-aps', 'data_ap') // parameter disesuaikan dengan variabel di controller
             ->names('data_aps');
-        Route::get('/data-kesehatan', [DataKesehatanController::class, 'index'])->name('data_kesehatan');
+         Route::resource('/data-kesehatan', DataKesehatanController::class)
+            ->parameter('data-kesehatan', 'data_kesehatan') // parameter disesuaikan
+            ->names('data_kesehatan');
 
         // Rute Data Infrastruktur
         Route::get('/data-kondisi-jalan', [DataKondisiJalanController::class, 'index'])->name('data_kondisi_jalan');

@@ -1,7 +1,9 @@
 <?php
+
 namespace App\Http\Controllers;
 use App\Models\Pendidikan;
 use App\Models\Aps;
+use App\Models\Kesehatan;
 use Illuminate\Http\Request;
 
 class SosialController extends Controller {
@@ -18,11 +20,24 @@ class SosialController extends Controller {
             'SMA/MA/SMK' => $dataAps ? number_format($dataAps->persentase_sma, 2) . '%' : 'N/A',
         ];
 
-        $dataFaskes = [
-            'Puskesmas' => '32 Unit',
-            'Rumah Sakit' => '8 Unit',
-            'Puskesmas Pembantu' => '75 Unit',
-        ];
+        // 2. Ambil data kesehatan terbaru
+        $dataKesehatanTerbaru = Kesehatan::orderBy('tahun', 'desc')->first();
+
+        // 3. Format data untuk ditampilkan (atau gunakan data default jika kosong)
+        if ($dataKesehatanTerbaru) {
+            $dataFaskes = [
+                'Rumah Sakit' => $dataKesehatanTerbaru->jumlah_rumah_sakit . ' Unit',
+                'Puskesmas' => $dataKesehatanTerbaru->jumlah_puskesmas . ' Unit',
+                'Puskesmas Pembantu' => $dataKesehatanTerbaru->jumlah_puskesmas_pembantu . ' Unit',
+            ];
+        } else {
+            // Data default jika tabel masih kosong
+            $dataFaskes = [
+                'Rumah Sakit' => '0 Unit',
+                'Puskesmas' => '0 Unit',
+                'Puskesmas Pembantu' => '0 Unit',
+            ];
+        }
 
         $dataUhh = '74,55 Tahun';
 
