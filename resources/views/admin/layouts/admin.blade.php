@@ -117,7 +117,7 @@
                         <ul id="infrastruktur" class="submenu pl-8 mt-1 space-y-1">
                             <li><a href="{{ route('admin.data_kondisi_jalan.index') }}"
                                     class="block px-4 py-1 hover:text-gray-300 rounded-md">Data Kondisi Jalan</a></li>
-                            <li><a href="{{ route('admin.data_akses_rumah_tangga') }}"
+                            <li><a href="{{ route('admin.data_akses_rumah_tangga.index') }}"
                                     class="block px-4 py-1 hover:text-gray-300 rounded-md">Data Akses Rumah Tangga</a>
                             </li>
                             <li><a href="{{ route('admin.data_luas_lahan_produksi_pertanian') }}"

@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\KondisiJalan; // Tambahkan ini
+use App\Models\KondisiJalan;
+use App\Models\AksesRumahTangga;
 use Illuminate\Http\Request;
 
 class InfrastrukturController extends Controller
@@ -30,12 +31,22 @@ class InfrastrukturController extends Controller
             ];
         }
 
-        // Data untuk Akses Rumah Tangga (sudah ada)
-        $dataAksesRumahTangga = [
-            'Akses Air Bersih Layak' => '92.50%',
-            'Akses Sanitasi Layak' => '88.75%',
-            'Rasio Elektrifikasi' => '99.98%'
-        ];
+        $aksesTerbaru = AksesRumahTangga::orderBy('tahun', 'desc')->first();
+
+        if ($aksesTerbaru) {
+            $dataAksesRumahTangga = [
+                'Akses Air Bersih Layak' => number_format($aksesTerbaru->persentase_akses_air_bersih_layak, 2) . '%',
+                'Akses Sanitasi Layak' => number_format($aksesTerbaru->akses_sanitasi_layak, 2) . '%',
+                'Rasio Elektrifikasi' => number_format($aksesTerbaru->rasio_elektrifikasi, 2) . '%'
+            ];
+        } else {
+            // Data default jika tabel kosong
+            $dataAksesRumahTangga = [
+                'Akses Air Bersih Layak' => '0.00%',
+                'Akses Sanitasi Layak' => '0.00%',
+                'Rasio Elektrifikasi' => '0.00%'
+            ];
+        }
 
         // Data Luas Lahan dan Produksi Pertanian (sudah ada)
         $dataPertanian = [
