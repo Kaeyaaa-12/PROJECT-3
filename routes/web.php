@@ -69,6 +69,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         // Rute Data Ekonomi & Keuangan
         Route::resource('/data-pdrb-sektor-usaha', DataPdrbSektorUsahaController::class)->names('data_pdrb_sektor_usaha');
+        Route::resource('/data-laju-inflasi', \App\Http\Controllers\Admin\DataLajuInflasiController::class)
+            ->parameter('data-laju-inflasi', 'data_laju_inflasi') // parameter disesuaikan
+            ->names('data_laju_inflasi');
 
         // Rute Data Infrastruktur
         Route::get('/data-kondisi-jalan', [DataKondisiJalanController::class, 'index'])->name('data_kondisi_jalan');

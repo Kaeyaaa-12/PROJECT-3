@@ -7,6 +7,7 @@ use App\Models\IpmKecamatan;
 use App\Models\PendudukKecamatan;
 use App\Models\KemiskinanKecamatan;
 use App\Models\PengangguranKecamatan;
+use App\Models\LajuInflasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -86,8 +87,15 @@ class DashboardController extends Controller
             'values' => $kemiskinanPerTahun->pluck('value')
         ];
 
-        // Data dummy lainnya
-        $dataInflasi = [ 'labels' => ['2021', '2022', '2023'], 'values' => [3.0, 6.2, 2.8] ];
+        $inflasiPerTahun = LajuInflasi::select('tahun as label', 'persentase as value')
+            ->orderBy('tahun', 'asc')
+            ->get();
+
+        // 3. Format data untuk Chart.js
+        $dataInflasi = [
+            'labels' => $inflasiPerTahun->pluck('label'),
+            'values' => $inflasiPerTahun->pluck('value')
+        ];
 
         return view('home', compact('kpiData', 'dataPenduduk', 'dataIPM', 'dataInflasi', 'dataMiskin'));
     }

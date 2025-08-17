@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 use App\Models\EkonomiKecamatan;
 use App\Models\PdrbSektorUsaha;
+use App\Models\LajuInflasi;
 use Illuminate\Http\Request;
 
 class EkonomiController extends Controller {
@@ -31,9 +32,13 @@ class EkonomiController extends Controller {
         }
 
         // Data untuk Grafik Inflasi Tahunan
+        // Mengambil data inflasi dari database
+        $inflasi = LajuInflasi::orderBy('tahun', 'asc')->get();
+
+        // Memformat data untuk grafik
         $dataInflasi = [
-            'labels' => ['2021', '2022', '2023'],
-            'values' => [3.0, 6.2, 2.8]
+            'labels' => $inflasi->pluck('tahun'),
+            'values' => $inflasi->pluck('persentase')
         ];
 
         return view('ekonomi.index', compact('dataPdrbSektor', 'dataInflasi'));

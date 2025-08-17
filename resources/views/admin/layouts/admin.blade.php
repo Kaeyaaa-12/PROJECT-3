@@ -100,8 +100,8 @@
                             <li><a href="{{ route('admin.data_pdrb_sektor_usaha.index') }}"
                                     class="block px-4 py-1 hover:text-gray-300 rounded-md">PDRB per Sektor Usaha</a>
                             </li>
-                            <li><a href="#" class="block px-4 py-1 hover:text-gray-300 rounded-md">Laju Inflasi
-                                    Tahunan</a></li>
+                            <li><a href="{{ route('admin.data_laju_inflasi.index') }}"
+                                    class="block px-4 py-1 hover:text-gray-300 rounded-md">Laju Inflasi Tahunan</a></li>
                         </ul>
                     </li>
 
